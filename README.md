@@ -1,3 +1,11 @@
+# AgroHub - Fase 7
+
+Repositorio da Fase 7, criado a partir da Fase 6 (https://github.com/Erickito30/agrohub-react--fase-6).
+Site: https://nuneslucass23.github.io/agrohub-react--fase-7/
+Divisao do grupo e cronograma: [docs/fase7/DIVISAO-GRUPO.md](docs/fase7/DIVISAO-GRUPO.md)
+
+---
+
 # AgroHub - Fase 6: integracao da parte do Pietro
 
 Base: https://github.com/Erickito30/agrohub-react--fase-6
