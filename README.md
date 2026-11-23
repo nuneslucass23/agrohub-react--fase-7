@@ -1,27 +1,61 @@
 # AgroHub - Fase 7
 
-Repositorio da Fase 7, criado a partir da Fase 6 (https://github.com/Erickito30/agrohub-react--fase-6).
-Site: https://nuneslucass23.github.io/agrohub-react--fase-7/
-Divisao do grupo e cronograma: [docs/fase7/DIVISAO-GRUPO.md](docs/fase7/DIVISAO-GRUPO.md)
+**FIAP 2026 · Engenharia de Software · 1º ano · Grupo 75 · ODS 2 (Fome Zero e Agricultura Sustentável)**
 
----
+O AgroHub conecta pequenos produtores rurais a ONGs e instituições sociais, para que excedentes e
+alimentos fora do padrão comercial virem doação em vez de desperdício.
 
-# AgroHub - Fase 6: integracao da parte do Pietro
+- **Site publicado:** https://nuneslucass23.github.io/agrohub-react--fase-7/
+- **Pitch vídeo da Fase 7:** link na Home do site (seção "Pitch vídeo")
+- **Repositório da Fase 6:** https://github.com/Erickito30/agrohub-react--fase-6
 
-Base: https://github.com/Erickito30/agrohub-react--fase-6
-Commit do colega preservado: `8c924ac` (favoritos no painel ONG).
+## Integrantes
 
-Esta versao integra os ajustes da Home, Cadastro e Contato do Pietro com os
-favoritos ja implementados pelo colega. O painel ONG e o CSS nao foram alterados
-por esta integracao. O UML foi revisado conforme os dados e funcoes existentes.
+- Erick Henrique Miranda Izidoro
+- João Victor Silva de Paula Cesar
+- Lucas Nunes Nogueira
+- Pietro de Nadai Fernandes de Andrade
 
-- [Diagrama UML e explicacao](docs/fase6/UML.md) ([PDF](docs/fase6/AgroHub-Fase6-UML.pdf))
-- [Diagrama em imagem](docs/fase6/diagrama-classes.png)
-- [Entrega do Pietro](docs/fase6/ENTREGA-PIETRO.md)
-- [Fonte Mermaid editavel](docs/fase6/diagrama-classes.mmd)
-- [Divisao atualizada do grupo](docs/fase6/DIVISAO-GRUPO.md)
+## O que há de novo na Fase 7
 
-## Executar
+### CEP automático no cadastro do produtor
+
+Na página **Cadastre-se → Produtor**, o endereço é preenchido a partir do CEP:
+
+1. Quando o CEP tem 8 números, o site faz uma requisição com `fetch` para a API pública
+   [ViaCEP](https://viacep.com.br/) (`https://viacep.com.br/ws/{cep}/json/`).
+2. A resposta em JSON preenche **rua, bairro, cidade e UF**. O número continua sendo digitado pelo usuário.
+3. Enquanto busca, aparece "Buscando endereço...".
+4. Se o CEP não existir (a API responde `{ "erro": true }`), aparece "CEP não encontrado".
+5. Se a conexão falhar, o `try/catch` mostra um aviso e o usuário pode preencher à mão.
+
+Os campos de endereço são **controlados pelo estado do React** (`useState`), o que permite que o
+resultado da API apareça direto no formulário e que o usuário continue podendo editar.
+
+Código: [`agrohub-react/src/components/EnderecoCep.jsx`](agrohub-react/src/components/EnderecoCep.jsx),
+usado em [`agrohub-react/src/pages/Cadastro.jsx`](agrohub-react/src/pages/Cadastro.jsx).
+
+## Funcionalidades das fases anteriores
+
+| Funcionalidade | Onde | Como funciona |
+| --- | --- | --- |
+| Cadastro de excedente | Sou produtor | Formulário controlado com validação de campos obrigatórios |
+| Notificações | Sino no menu (todas as páginas) | Context API do React (`NotificationsContext`) |
+| Excedente novo na lista da ONG | Sou ONG | O item cadastrado pelo produtor aparece com o selo "Novo" |
+| Filtros por categoria e distância | Sou ONG | Estado do React filtrando a lista |
+| Favoritos e agendamento de coleta | Sou ONG | Salvos no `localStorage`, continuam após recarregar a página |
+| Simulador de impacto | Home | Calcula o impacto estimado de uma doação |
+| Formulário de contato e perguntas frequentes | Fale conosco | Formulário controlado com validação |
+
+## Tecnologias
+
+- React 18 + Vite 5
+- React Router (`HashRouter`, para funcionar no GitHub Pages)
+- Context API e hooks (`useState`, `useEffect`)
+- `fetch` com `async/await` para consumir a API ViaCEP
+- Deploy automático no GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml`) a cada push na `main`
+
+## Como executar
 
 ```sh
 cd agrohub-react
@@ -29,21 +63,16 @@ npm ci
 npm run dev
 ```
 
-Build: `npm run build` na pasta `agrohub-react`.
+O site abre em `http://localhost:5173/agrohub-react--fase-7/`.
 
-Para ativar o link do pitch na Home, preencher `PHASE_6_VIDEO_URL` em
-`agrohub-react/src/data/pitches.js` com a URL HTTPS do video publico da Fase 6.
-Gerar novo build depois de alterar. O link ainda depende da publicacao do video.
+Build de produção: `npm run build` na pasta `agrohub-react`.
 
-O Vite usa `base: /agrohub-react--fase-6/`, o caminho do GitHub Pages do
-repositorio novo. Se o grupo escolher dominio raiz/Vercel, usar a base
-correspondente. O app usa HashRouter.
+## Estrutura
 
-O painel ONG guarda no localStorage os favoritos (`agrohub-ong-favorites`) e os
-agendamentos (`agrohub-ong-scheduled`), entao os dois continuam apos recarregar
-a pagina no mesmo navegador. Se o armazenamento estiver indisponivel ou com
-dado invalido, o painel ignora o valor salvo e funciona so em memoria.
-
-Os documentos antigos HANDOVER.md e agrohub-react/README.md sao historicos da
-Fase 5. Seguir docs/fase6 para esta entrega. O PDF de UML e material de apoio;
-Joao ainda precisa montar o PDF final com nomes completos e links reais.
+```text
+agrohub-react/src/
+├── components/   Header, Footer, Layout, PitchSection, EnderecoCep...
+├── context/      NotificationsContext (notificações e excedentes)
+├── data/         pitches.js (links dos pitch vídeos)
+└── pages/        Home, Cadastro, Produtor, Ong, Contato
+```
