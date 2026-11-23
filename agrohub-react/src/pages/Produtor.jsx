@@ -1,4 +1,5 @@
 import { useState } from "react";
+import EnderecoCep from "../components/EnderecoCep.jsx";
 import { useNotifications } from "../context/NotificationsContext.jsx";
 
 const benefitCards = [
@@ -16,11 +17,18 @@ const benefitCards = [
   },
 ];
 
-const EMPTY_FORM = { produto: "", quantidade: "", validade: "", retirada: "" };
+const EMPTY_FORM = { produto: "", quantidade: "", validade: "" };
+
+// Junta os campos do endereço num texto só, para mostrar na lista da ONG.
+const formatarEndereco = ({ rua, numero, bairro, cidade, uf }) =>
+  `${rua}, ${numero} - ${bairro}, ${cidade}/${uf}`;
 
 export default function Produtor() {
   const { addExcedente } = useNotifications();
   const [values, setValues] = useState(EMPTY_FORM);
+  const [endereco, setEndereco] = useState(null);
+  // Muda a cada envio para recriar (e limpar) os campos de endereço.
+  const [enderecoKey, setEnderecoKey] = useState(0);
   const [validated, setValidated] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -41,8 +49,9 @@ export default function Produtor() {
       return;
     }
 
-    addExcedente(values);
+    addExcedente({ ...values, retirada: formatarEndereco(endereco) });
     setValues(EMPTY_FORM);
+    setEnderecoKey((atual) => atual + 1);
     setValidated(false);
     setSuccess(true);
   };
@@ -137,22 +146,14 @@ export default function Produtor() {
                   </div>
                 </div>
 
-                <div className="col-md-6">
-                  <label className="form-label fw-bold" htmlFor="retirada">
-                    Local de retirada
-                  </label>
-                  <input
-                    className="form-control ah-form-control"
-                    id="retirada"
-                    name="retirada"
-                    value={values.retirada}
-                    onChange={handleChange}
-                    type="text"
-                    autoComplete="street-address"
-                    required
-                  />
-                  <div className="invalid-feedback">Informe o local de retirada.</div>
+                <div className="col-12">
+                  <h3 className="h6 fw-bold mt-2 mb-0">Local de retirada</h3>
                 </div>
+                <EnderecoCep
+                  key={enderecoKey}
+                  prefixo="retirada"
+                  onEnderecoChange={setEndereco}
+                />
 
                 <div className="col-12">
                   {success && (

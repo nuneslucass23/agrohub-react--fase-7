@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ENDERECO_VAZIO = { cep: "", rua: "", numero: "", bairro: "", cidade: "", uf: "" };
 
@@ -8,8 +8,14 @@ const MENSAGENS = {
   erro: "Não foi possível buscar o CEP agora. Preencha o endereço manualmente.",
 };
 
-export default function EnderecoCep({ prefixo }) {
+export default function EnderecoCep({ prefixo, onEnderecoChange }) {
   const [endereco, setEndereco] = useState(ENDERECO_VAZIO);
+
+  // Avisa a página que usa o componente sempre que o endereço muda,
+  // para ela poder salvar o endereço junto com o resto do formulário.
+  useEffect(() => {
+    onEnderecoChange?.(endereco);
+  }, [endereco, onEnderecoChange]);
   const [status, setStatus] = useState("");
 
   const buscarCep = async (cep) => {
