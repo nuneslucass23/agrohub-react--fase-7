@@ -1,5 +1,5 @@
-// Insira aqui o link publico entregue pelo responsavel pelo video da Fase 6.
-export const PHASE_6_VIDEO_URL = "https://youtu.be/F3RnE1fJM8A";
+// Cole aqui o link publico do video da Fase 7 (YouTube) quando ele for publicado.
+export const PHASE_7_VIDEO_URL = "";
 
 export function getPublicVideoUrl(value) {
   try {
@@ -12,15 +12,9 @@ export function getPublicVideoUrl(value) {
 
 export const previousPitches = [
   {
-    phase: 4,
-    title: "Testes e melhorias",
-    description: "Contato e simulador de impacto da Fase 4.",
-    url: "https://youtube.com/shorts/YjEcv2xwYz8",
-  },
-  {
-    phase: 3,
-    title: "Protótipo inicial",
-    description: "Primeira apresentação da navegação do AgroHub.",
-    url: "https://drive.google.com/file/d/1Q60UvvN7hrO8EKcji6_TGK2RlSb9yrnV/view?usp=sharing",
+    phase: 6,
+    title: "Telas, UML e favoritos",
+    description: "Identidade visual, diagrama de classes e favoritos da ONG.",
+    url: "https://youtu.be/F3RnE1fJM8A",
   },
 ];

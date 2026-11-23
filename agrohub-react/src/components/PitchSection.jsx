@@ -1,33 +1,37 @@
 import {
-  PHASE_6_VIDEO_URL,
+  PHASE_7_VIDEO_URL,
   getPublicVideoUrl,
   previousPitches,
 } from "../data/pitches.js";
 
 export default function PitchSection() {
-  const videoUrl = getPublicVideoUrl(PHASE_6_VIDEO_URL);
+  const videoUrl = getPublicVideoUrl(PHASE_7_VIDEO_URL);
 
   return (
     <section className="ah-section ah-section-dark" id="pitch" aria-labelledby="pitch-title">
       <div className="container">
         <div className="row g-4">
           <div className="col-lg-5">
-            <span className="ah-eyebrow">Pitch vídeo · Fase 6</span>
+            <span className="ah-eyebrow">Pitch vídeo · Fase 7</span>
             <h2 className="ah-section-title mb-3" id="pitch-title">AgroHub em evolução</h2>
             <p className="ah-lead">
               A nova etapa da conexão entre produtores rurais e instituições sociais.
             </p>
             {videoUrl ? (
               <a className="ah-btn" href={videoUrl} target="_blank" rel="noopener noreferrer">
-                Assistir ao pitch da Fase 6
+                Assistir ao pitch da Fase 7
               </a>
             ) : (
-              <p className="ah-lead mb-0">Vídeo da Fase 6 em preparação.</p>
+              <p className="ah-lead mb-0">Vídeo da Fase 7 em preparação.</p>
             )}
           </div>
           <div className="col-lg-7">
-            <h3 className="h5 mb-3">Apresentações anteriores</h3>
-            <div className="row g-3">
+            <div className="row justify-content-md-end">
+              <div className="col-md-6">
+                <h3 className="h5 mb-3 text-md-center">Apresentações anteriores</h3>
+              </div>
+            </div>
+            <div className="row g-3 justify-content-md-end">
               {previousPitches.map((pitch) => (
                 <div className="col-md-6" key={pitch.phase}>
                   <article className="ah-pitch-card">
