@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PageIntro from "../components/PageIntro.jsx";
+import EnderecoCep from "../components/EnderecoCep.jsx";
 
 const TABS = [
   { id: "produtor", label: "Produtor" },
@@ -56,7 +57,7 @@ export default function Cadastro() {
     }));
   };
 
-  const renderForm = (formId, fields, buttonLabel) => {
+  const renderForm = (formId, fields, buttonLabel, extra) => {
     const isActive = activeTab === formId;
 
     return (
@@ -101,6 +102,7 @@ export default function Cadastro() {
               <div className="invalid-feedback">{field.errorText}</div>
             </div>
           ))}
+          {extra}
 
           <div className="col-12">
             <p
@@ -179,15 +181,7 @@ export default function Cadastro() {
                 required: true,
                 errorText: "Informe a quantidade aproximada.",
               },
-              {
-                id: "produtor-retirada",
-                label: "Local de retirada",
-                type: "text",
-                autoComplete: "street-address",
-                required: true,
-                errorText: "Informe o local de retirada.",
-              },
-            ], "Cadastrar produtor")}
+            ], "Cadastrar produtor", <EnderecoCep prefixo="produtor" />)}
 
             {renderForm("ong", [
               {
